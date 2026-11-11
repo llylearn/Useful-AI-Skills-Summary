@@ -1,0 +1,1196 @@
+{
+ "date": "2026-11-11",
+ "total": 85,
+ "stocks": [
+  {
+   "code": "002076",
+   "name": "星光股份",
+   "lb": 1,
+   "first_time": "09:25",
+   "order_amount": 54375348,
+   "close_price": 2.22,
+   "zbc": 1,
+   "tags": [
+    "照明设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002160",
+   "name": "常铝股份",
+   "lb": 2,
+   "first_time": "09:25",
+   "order_amount": 53945320,
+   "close_price": 4.4,
+   "zbc": 5,
+   "tags": [
+    "工业金属"
+   ],
+   "high_days": "2连板",
+   "bj": false
+  },
+  {
+   "code": "002209",
+   "name": "达 意 隆",
+   "lb": 2,
+   "first_time": "09:25",
+   "order_amount": 472343091,
+   "close_price": 13.96,
+   "zbc": 0,
+   "tags": [
+    "专用设备"
+   ],
+   "high_days": "2连板",
+   "bj": false
+  },
+  {
+   "code": "002623",
+   "name": "亚玛顿",
+   "lb": 3,
+   "first_time": "09:25",
+   "order_amount": 171634470,
+   "close_price": 23.33,
+   "zbc": 0,
+   "tags": [
+    "光伏设备"
+   ],
+   "high_days": "7天4板",
+   "bj": false
+  },
+  {
+   "code": "002861",
+   "name": "瀛通通讯",
+   "lb": 2,
+   "first_time": "09:25",
+   "order_amount": 63447624,
+   "close_price": 14.32,
+   "zbc": 0,
+   "tags": [
+    "消费电子"
+   ],
+   "high_days": "2连板",
+   "bj": false
+  },
+  {
+   "code": "600715",
+   "name": "文投控股",
+   "lb": 3,
+   "first_time": "09:25",
+   "order_amount": 104688856,
+   "close_price": 3.14,
+   "zbc": 9,
+   "tags": [
+    "游戏Ⅱ"
+   ],
+   "high_days": "16天9板",
+   "bj": false
+  },
+  {
+   "code": "600327",
+   "name": "大东方",
+   "lb": 4,
+   "first_time": "09:25",
+   "order_amount": 116875219,
+   "close_price": 6.53,
+   "zbc": 2,
+   "tags": [
+    "一般零售"
+   ],
+   "high_days": "7天5板",
+   "bj": false
+  },
+  {
+   "code": "603366",
+   "name": "日出东方",
+   "lb": 4,
+   "first_time": "09:25",
+   "order_amount": 569218986,
+   "close_price": 11.97,
+   "zbc": 0,
+   "tags": [
+    "厨卫电器"
+   ],
+   "high_days": "4连板",
+   "bj": false
+  },
+  {
+   "code": "603396",
+   "name": "金辰股份",
+   "lb": 1,
+   "first_time": "09:25",
+   "order_amount": 176491847,
+   "close_price": 29.19,
+   "zbc": 0,
+   "tags": [
+    "光伏设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "603536",
+   "name": "惠发食品",
+   "lb": 2,
+   "first_time": "09:30",
+   "order_amount": 75527160,
+   "close_price": 11.85,
+   "zbc": 0,
+   "tags": [
+    "食品加工"
+   ],
+   "high_days": "2连板",
+   "bj": false
+  },
+  {
+   "code": "002313",
+   "name": "日海智能",
+   "lb": 2,
+   "first_time": "09:30",
+   "order_amount": 45725080,
+   "close_price": 10.16,
+   "zbc": 2,
+   "tags": [
+    "通信设备"
+   ],
+   "high_days": "5天3板",
+   "bj": false
+  },
+  {
+   "code": "000545",
+   "name": "金浦钛业",
+   "lb": 1,
+   "first_time": "09:30",
+   "order_amount": 37792007,
+   "close_price": 2.09,
+   "zbc": 2,
+   "tags": [
+    "化学原料"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002931",
+   "name": "锋龙股份",
+   "lb": 3,
+   "first_time": "09:30",
+   "order_amount": 146633500,
+   "close_price": 53.08,
+   "zbc": 1,
+   "tags": [
+    "通用设备"
+   ],
+   "high_days": "3连板",
+   "bj": false
+  },
+  {
+   "code": "002425",
+   "name": "凯撒文化",
+   "lb": 2,
+   "first_time": "09:30",
+   "order_amount": 57198610,
+   "close_price": 3.83,
+   "zbc": 2,
+   "tags": [
+    "游戏Ⅱ"
+   ],
+   "high_days": "2连板",
+   "bj": false
+  },
+  {
+   "code": "603135",
+   "name": "中重科技",
+   "lb": 1,
+   "first_time": "09:30",
+   "order_amount": 41971745,
+   "close_price": 9.25,
+   "zbc": 1,
+   "tags": [
+    "专用设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "600876",
+   "name": "凯盛新能",
+   "lb": 1,
+   "first_time": "09:30",
+   "order_amount": 43259045,
+   "close_price": 7.61,
+   "zbc": 0,
+   "tags": [
+    "玻璃玻纤"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002529",
+   "name": "海源复材",
+   "lb": 1,
+   "first_time": "09:31",
+   "order_amount": 13734798,
+   "close_price": 6.82,
+   "zbc": 3,
+   "tags": [
+    "专用设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002593",
+   "name": "日上集团",
+   "lb": 1,
+   "first_time": "09:31",
+   "order_amount": 48723172,
+   "close_price": 4.75,
+   "zbc": 2,
+   "tags": [
+    "专业工程"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "600076",
+   "name": "康欣新材",
+   "lb": 1,
+   "first_time": "09:31",
+   "order_amount": 26121997,
+   "close_price": 2.23,
+   "zbc": 0,
+   "tags": [
+    "包装印刷"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002520",
+   "name": "日发精机",
+   "lb": 1,
+   "first_time": "09:32",
+   "order_amount": 105710914,
+   "close_price": 7.26,
+   "zbc": 0,
+   "tags": [
+    "通用设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "603083",
+   "name": "剑桥科技",
+   "lb": 1,
+   "first_time": "09:34",
+   "order_amount": 423701780,
+   "close_price": 116.95,
+   "zbc": 1,
+   "tags": [
+    "通信设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "600103",
+   "name": "青山纸业",
+   "lb": 1,
+   "first_time": "09:35",
+   "order_amount": 87837019,
+   "close_price": 3.28,
+   "zbc": 1,
+   "tags": [
+    "造纸"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "603042",
+   "name": "华脉科技",
+   "lb": 1,
+   "first_time": "09:36",
+   "order_amount": 71090883,
+   "close_price": 13.38,
+   "zbc": 0,
+   "tags": [
+    "通信设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002278",
+   "name": "神开股份",
+   "lb": 1,
+   "first_time": "09:36",
+   "order_amount": 39284742,
+   "close_price": 7.98,
+   "zbc": 4,
+   "tags": [
+    "专用设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002110",
+   "name": "三钢闽光",
+   "lb": 1,
+   "first_time": "09:37",
+   "order_amount": 46668990,
+   "close_price": 3.01,
+   "zbc": 0,
+   "tags": [
+    "普钢"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "000026",
+   "name": "飞亚达",
+   "lb": 1,
+   "first_time": "09:40",
+   "order_amount": 51950196,
+   "close_price": 23.16,
+   "zbc": 3,
+   "tags": [
+    "饰品"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "003032",
+   "name": "传智教育",
+   "lb": 1,
+   "first_time": "09:41",
+   "order_amount": 14949616,
+   "close_price": 11.11,
+   "zbc": 5,
+   "tags": [
+    "教育"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "000631",
+   "name": "顺发恒能",
+   "lb": 1,
+   "first_time": "09:41",
+   "order_amount": 59592782,
+   "close_price": 3.14,
+   "zbc": 0,
+   "tags": [
+    "电力"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002708",
+   "name": "光洋股份",
+   "lb": 3,
+   "first_time": "09:43",
+   "order_amount": 99852363,
+   "close_price": 26.59,
+   "zbc": 2,
+   "tags": [
+    "汽车零部"
+   ],
+   "high_days": "13天7板",
+   "bj": false
+  },
+  {
+   "code": "605255",
+   "name": "天普股份",
+   "lb": 2,
+   "first_time": "09:45",
+   "order_amount": 10249680,
+   "close_price": 61.01,
+   "zbc": 1,
+   "tags": [
+    "汽车零部"
+   ],
+   "high_days": "2连板",
+   "bj": false
+  },
+  {
+   "code": "002713",
+   "name": "东易日盛",
+   "lb": 1,
+   "first_time": "09:47",
+   "order_amount": 53914635,
+   "close_price": 8.48,
+   "zbc": 0,
+   "tags": [
+    "装修装饰"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "603040",
+   "name": "新坐标",
+   "lb": 1,
+   "first_time": "09:48",
+   "order_amount": 21748221,
+   "close_price": 43.97,
+   "zbc": 3,
+   "tags": [
+    "汽车零部"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "600629",
+   "name": "华建集团",
+   "lb": 1,
+   "first_time": "09:48",
+   "order_amount": 45548734,
+   "close_price": 15.19,
+   "zbc": 2,
+   "tags": [
+    "工程咨询"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "603586",
+   "name": "金麒麟",
+   "lb": 1,
+   "first_time": "09:49",
+   "order_amount": 6811288,
+   "close_price": 14.96,
+   "zbc": 3,
+   "tags": [
+    "汽车零部"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "603725",
+   "name": "天安新材",
+   "lb": 1,
+   "first_time": "09:50",
+   "order_amount": 51087092,
+   "close_price": 11.96,
+   "zbc": 1,
+   "tags": [
+    "家居用品"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "000635",
+   "name": "英 力 特",
+   "lb": 1,
+   "first_time": "09:52",
+   "order_amount": 10362129,
+   "close_price": 10.21,
+   "zbc": 4,
+   "tags": [
+    "化学原料"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002154",
+   "name": "报 喜 鸟",
+   "lb": 1,
+   "first_time": "09:53",
+   "order_amount": 46039678,
+   "close_price": 3.89,
+   "zbc": 0,
+   "tags": [
+    "服装家纺"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "600293",
+   "name": "三峡新材",
+   "lb": 1,
+   "first_time": "10:02",
+   "order_amount": 74875259,
+   "close_price": 4.31,
+   "zbc": 1,
+   "tags": [
+    "玻璃玻纤"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "001282",
+   "name": "三联锻造",
+   "lb": 1,
+   "first_time": "10:03",
+   "order_amount": 83679994,
+   "close_price": 18.7,
+   "zbc": 0,
+   "tags": [
+    "汽车零部"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002362",
+   "name": "汉王科技",
+   "lb": 1,
+   "first_time": "10:07",
+   "order_amount": 45956280,
+   "close_price": 18.69,
+   "zbc": 2,
+   "tags": [
+    "软件开发"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "301636",
+   "name": "泽润新能",
+   "lb": 1,
+   "first_time": "10:07",
+   "order_amount": 70677563,
+   "close_price": 47.2,
+   "zbc": 1,
+   "tags": [
+    "光伏设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "001331",
+   "name": "胜通能源",
+   "lb": 1,
+   "first_time": "10:08",
+   "order_amount": 103156673,
+   "close_price": 35.28,
+   "zbc": 0,
+   "tags": [
+    "燃气Ⅱ"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "603706",
+   "name": "东方环宇",
+   "lb": 3,
+   "first_time": "10:13",
+   "order_amount": 13485360,
+   "close_price": 24.43,
+   "zbc": 10,
+   "tags": [
+    "燃气Ⅱ"
+   ],
+   "high_days": "3连板",
+   "bj": false
+  },
+  {
+   "code": "000407",
+   "name": "胜利股份",
+   "lb": 1,
+   "first_time": "10:17",
+   "order_amount": 16579677,
+   "close_price": 4.35,
+   "zbc": 4,
+   "tags": [
+    "燃气Ⅱ"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002633",
+   "name": "申科股份",
+   "lb": 1,
+   "first_time": "10:31",
+   "order_amount": 12341504,
+   "close_price": 15.52,
+   "zbc": 1,
+   "tags": [
+    "通用设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "001339",
+   "name": "智微智能",
+   "lb": 2,
+   "first_time": "10:34",
+   "order_amount": 57420353,
+   "close_price": 69.73,
+   "zbc": 1,
+   "tags": [
+    "计算机设"
+   ],
+   "high_days": "6天3板",
+   "bj": false
+  },
+  {
+   "code": "603466",
+   "name": "风语筑",
+   "lb": 2,
+   "first_time": "10:35",
+   "order_amount": 44772539,
+   "close_price": 16.86,
+   "zbc": 4,
+   "tags": [
+    "数字媒体"
+   ],
+   "high_days": "2连板",
+   "bj": false
+  },
+  {
+   "code": "002765",
+   "name": "蓝黛科技",
+   "lb": 1,
+   "first_time": "10:39",
+   "order_amount": 31472220,
+   "close_price": 7.8,
+   "zbc": 0,
+   "tags": [
+    "汽车零部"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "603028",
+   "name": "赛福天",
+   "lb": 1,
+   "first_time": "10:42",
+   "order_amount": 49136644,
+   "close_price": 7.95,
+   "zbc": 1,
+   "tags": [
+    "通用设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "000678",
+   "name": "襄阳轴承",
+   "lb": 2,
+   "first_time": "10:43",
+   "order_amount": 33777241,
+   "close_price": 21.19,
+   "zbc": 6,
+   "tags": [
+    "汽车零部"
+   ],
+   "high_days": "15天8板",
+   "bj": false
+  },
+  {
+   "code": "301596",
+   "name": "瑞迪智驱",
+   "lb": 1,
+   "first_time": "10:43",
+   "order_amount": 21925696,
+   "close_price": 58.4,
+   "zbc": 2,
+   "tags": [
+    "通用设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002164",
+   "name": "宁波东力",
+   "lb": 1,
+   "first_time": "10:48",
+   "order_amount": 90467288,
+   "close_price": 21.91,
+   "zbc": 1,
+   "tags": [
+    "通用设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "603330",
+   "name": "天洋新材",
+   "lb": 1,
+   "first_time": "11:18",
+   "order_amount": 77638290,
+   "close_price": 10.53,
+   "zbc": 0,
+   "tags": [
+    "塑料"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002919",
+   "name": "名臣健康",
+   "lb": 1,
+   "first_time": "11:21",
+   "order_amount": 31206492,
+   "close_price": 18.36,
+   "zbc": 1,
+   "tags": [
+    "游戏Ⅱ"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "301486",
+   "name": "致尚科技",
+   "lb": 1,
+   "first_time": "11:22",
+   "order_amount": 57467521,
+   "close_price": 160.57,
+   "zbc": 4,
+   "tags": [
+    "消费电子"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002148",
+   "name": "北纬科技",
+   "lb": 1,
+   "first_time": "11:29",
+   "order_amount": 43798950,
+   "close_price": 6.57,
+   "zbc": 0,
+   "tags": [
+    "通信服务"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "603258",
+   "name": "电魂网络",
+   "lb": 1,
+   "first_time": "13:00",
+   "order_amount": 20298853,
+   "close_price": 18.32,
+   "zbc": 0,
+   "tags": [
+    "游戏Ⅱ"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "600162",
+   "name": "香江控股",
+   "lb": 1,
+   "first_time": "13:00",
+   "order_amount": 58209319,
+   "close_price": 3.67,
+   "zbc": 0,
+   "tags": [
+    "房地产开"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002384",
+   "name": "东山精密",
+   "lb": 1,
+   "first_time": "13:11",
+   "order_amount": 656581126,
+   "close_price": 92.06,
+   "zbc": 0,
+   "tags": [
+    "元件"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "920157",
+   "name": "宇特光电",
+   "lb": 1,
+   "first_time": "13:12",
+   "order_amount": 24694781,
+   "close_price": 57.69,
+   "zbc": 2,
+   "tags": [
+    "通信设备"
+   ],
+   "high_days": "首板",
+   "bj": true
+  },
+  {
+   "code": "002463",
+   "name": "沪电股份",
+   "lb": 1,
+   "first_time": "13:13",
+   "order_amount": 263023914,
+   "close_price": 89.43,
+   "zbc": 3,
+   "tags": [
+    "元件"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002913",
+   "name": "奥士康",
+   "lb": 1,
+   "first_time": "13:17",
+   "order_amount": 104585676,
+   "close_price": 65.26,
+   "zbc": 0,
+   "tags": [
+    "元件"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002980",
+   "name": "华盛昌",
+   "lb": 1,
+   "first_time": "13:17",
+   "order_amount": 87443206,
+   "close_price": 75.82,
+   "zbc": 0,
+   "tags": [
+    "电网设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "300473",
+   "name": "德尔股份",
+   "lb": 1,
+   "first_time": "13:22",
+   "order_amount": 17013826,
+   "close_price": 58.79,
+   "zbc": 3,
+   "tags": [
+    "汽车零部"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002795",
+   "name": "永和智控",
+   "lb": 1,
+   "first_time": "13:26",
+   "order_amount": 12417999,
+   "close_price": 7.59,
+   "zbc": 0,
+   "tags": [
+    "通用设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "603730",
+   "name": "岱美股份",
+   "lb": 1,
+   "first_time": "13:27",
+   "order_amount": 38253182,
+   "close_price": 11.19,
+   "zbc": 1,
+   "tags": [
+    "汽车零部"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "600228",
+   "name": "返利科技",
+   "lb": 1,
+   "first_time": "13:29",
+   "order_amount": 69562400,
+   "close_price": 9.77,
+   "zbc": 0,
+   "tags": [
+    "数字媒体"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "603289",
+   "name": "泰瑞机器",
+   "lb": 1,
+   "first_time": "13:30",
+   "order_amount": 18538366,
+   "close_price": 10.15,
+   "zbc": 0,
+   "tags": [
+    "专用设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "605488",
+   "name": "福莱新材",
+   "lb": 2,
+   "first_time": "13:39",
+   "order_amount": 50452615,
+   "close_price": 63.03,
+   "zbc": 0,
+   "tags": [
+    "塑料"
+   ],
+   "high_days": "6天4板",
+   "bj": false
+  },
+  {
+   "code": "688135",
+   "name": "利扬芯片",
+   "lb": 1,
+   "first_time": "13:41",
+   "order_amount": 61088397,
+   "close_price": 35.02,
+   "zbc": 0,
+   "tags": [
+    "半导体"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "603228",
+   "name": "景旺电子",
+   "lb": 1,
+   "first_time": "13:44",
+   "order_amount": 221524396,
+   "close_price": 64.46,
+   "zbc": 0,
+   "tags": [
+    "元件"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002281",
+   "name": "光迅科技",
+   "lb": 1,
+   "first_time": "13:46",
+   "order_amount": 223337151,
+   "close_price": 103.93,
+   "zbc": 0,
+   "tags": [
+    "通信设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "601595",
+   "name": "上海电影",
+   "lb": 2,
+   "first_time": "13:46",
+   "order_amount": 33715726,
+   "close_price": 46.83,
+   "zbc": 0,
+   "tags": [
+    "影视院线"
+   ],
+   "high_days": "8天4板",
+   "bj": false
+  },
+  {
+   "code": "002957",
+   "name": "科瑞技术",
+   "lb": 1,
+   "first_time": "13:46",
+   "order_amount": 47044690,
+   "close_price": 28.55,
+   "zbc": 0,
+   "tags": [
+    "自动化设"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "301052",
+   "name": "果麦文化",
+   "lb": 1,
+   "first_time": "13:49",
+   "order_amount": 21964435,
+   "close_price": 48.96,
+   "zbc": 3,
+   "tags": [
+    "出版"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002779",
+   "name": "中坚科技",
+   "lb": 1,
+   "first_time": "13:50",
+   "order_amount": 88112370,
+   "close_price": 100.5,
+   "zbc": 4,
+   "tags": [
+    "专用设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002916",
+   "name": "深南电路",
+   "lb": 1,
+   "first_time": "13:55",
+   "order_amount": 188290396,
+   "close_price": 229.02,
+   "zbc": 0,
+   "tags": [
+    "元件"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "300990",
+   "name": "同飞股份",
+   "lb": 1,
+   "first_time": "13:57",
+   "order_amount": 26799446,
+   "close_price": 87.38,
+   "zbc": 2,
+   "tags": [
+    "通用设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002837",
+   "name": "英维克",
+   "lb": 1,
+   "first_time": "13:58",
+   "order_amount": 180741176,
+   "close_price": 43.32,
+   "zbc": 0,
+   "tags": [
+    "专用设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "688498",
+   "name": "源杰科技",
+   "lb": 1,
+   "first_time": "14:08",
+   "order_amount": 266695621,
+   "close_price": 774.85,
+   "zbc": 0,
+   "tags": [
+    "半导体"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "601869",
+   "name": "长飞光纤",
+   "lb": 1,
+   "first_time": "14:13",
+   "order_amount": 175973040,
+   "close_price": 277.56,
+   "zbc": 0,
+   "tags": [
+    "通信设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002975",
+   "name": "博杰股份",
+   "lb": 1,
+   "first_time": "14:14",
+   "order_amount": 23012746,
+   "close_price": 88.3,
+   "zbc": 0,
+   "tags": [
+    "自动化设"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002703",
+   "name": "浙江世宝",
+   "lb": 1,
+   "first_time": "14:29",
+   "order_amount": 60265433,
+   "close_price": 16.56,
+   "zbc": 0,
+   "tags": [
+    "汽车零部"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "600776",
+   "name": "东方通信",
+   "lb": 1,
+   "first_time": "14:35",
+   "order_amount": 33013371,
+   "close_price": 13.65,
+   "zbc": 5,
+   "tags": [
+    "通信设备"
+   ],
+   "high_days": "首板",
+   "bj": false
+  },
+  {
+   "code": "002886",
+   "name": "沃特股份",
+   "lb": 1,
+   "first_time": "14:48",
+   "order_amount": 48805780,
+   "close_price": 22.3,
+   "zbc": 0,
+   "tags": [
+    "塑料"
+   ],
+   "high_days": "首板",
+   "bj": false
+  }
+ ]
+}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>今日对照 · @@CUR_DATE@@</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:#f5f6f8;color:#222;line-height:1.4}
+.wrap{max-width:1440px;margin:0 auto;padding:16px 20px 28px}
+header.top{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;padding:6px 2px 14px;border-bottom:1px solid #e5e7eb;margin-bottom:14px}
+h1{font-size:22px;font-weight:700}
+.sub{font-size:13px;color:#666}
+.stats{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.chip{background:#fff;border:1px solid #e5e7eb;border-radius:999px;padding:4px 12px;font-size:13px;color:#444;white-space:nowrap}
+.chip b{color:#d43030;font-weight:600}
+.row{display:grid;grid-template-columns:1fr 48px 1fr;gap:10px;margin-bottom:28px}
+.axis{display:flex;align-items:flex-start;justify-content:center;padding-top:8px}
+.axis span{font-size:13px;font-weight:600;color:#fff;background:#d43030;border-radius:999px;padding:3px 9px;white-space:nowrap}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;align-content:start}
+.c-card{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:8px 10px;cursor:pointer;min-width:0;transition:box-shadow .15s}
+.c-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.c-card.common{border:2px solid #356b9a;background:#fff}
+.c-card .nm{display:flex;align-items:center;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden}
+.c-card .stock-name{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tag{display:inline-block;min-width:0;border-radius:4px;padding:1px 5px;font-size:10px;line-height:14px;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tag-region{background:#e8f1fb;color:#356b9a}
+.tag-industry{background:#fff0d9;color:#8b5b16}
+.tag-concept{background:#ffedd5;color:#c2410c}
+.c-card .nm .tag-industry{flex:0 1 auto;max-width:58%;margin-left:4px}
+.c-card .wl{display:flex;align-items:center;font-size:11px;color:#888;margin-top:3px;min-height:18px;white-space:nowrap;overflow:hidden}
+.c-card .wl .region{flex:0 1 auto;min-width:0;margin-right:6px}
+.c-card .wl .w{flex:none;color:#d43030;margin-right:6px}
+.c-card .wl .l{flex:none;color:#1a9e4b;margin-right:6px}
+.c-card .wl .fin{flex:none;color:#7c5cff}
+.c-card .seal{margin-top:3px;font-size:10px;line-height:16px;color:#8b5b16;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tags{display:flex;gap:4px;margin-top:4px;overflow:hidden;white-space:nowrap}
+.tags .tag{max-width:100%;flex:0 1 auto}
+.empty{color:#c4c8cd;font-size:12px;text-align:center;padding-top:10px}
+#mask{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:99;padding:16px}
+#mask.on{display:flex}
+.modal{background:#fff;border-radius:12px;max-width:430px;width:100%;max-height:86vh;overflow:auto;padding:20px 22px}
+.modal h3{font-size:17px;margin-bottom:2px}
+.modal .m-sub{font-size:12px;color:#888;margin-bottom:12px}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.kv .cell{background:#f7f8fa;border-radius:8px;padding:8px 10px}
+.kv .k{font-size:11px;color:#999}
+.kv .v{font-size:15px;font-weight:600;margin-top:1px}
+.modal h4{font-size:13px;margin:10px 0 5px;color:#555}
+.modal h4.wn::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#d43030;margin-right:6px}
+.modal h4.ls::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#1a9e4b;margin-right:6px}
+.opp{font-size:13px;color:#333;line-height:1.9;word-break:break-all}
+.opp em{font-style:normal;color:#fff;background:#d43030;font-size:10px;border-radius:3px;padding:0 5px;margin-left:3px;white-space:nowrap;vertical-align:1px}
+.none{font-size:12px;color:#bbb}
+#close{position:absolute;top:10px;right:14px;font-size:20px;color:#999;cursor:pointer;background:none;border:none}
+footer{margin-top:18px;padding-top:12px;border-top:1px solid #e5e7eb;font-size:12px;color:#999;line-height:1.9}
+@media(max-width:1100px){.cards{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.cards{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:1fr 36px 1fr;gap:6px}.wrap{padding:12px 10px 22px}.sub{flex:1 1 100%;order:2}.stats{order:3;margin-left:0}}
+@media(max-width:480px){.cards{grid-template-columns:1fr}.axis span{padding:2px 6px;font-size:11px}.c-card .nm{font-size:13px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <h1>今日对照</h1>
+  <div class="sub">当前 @@CUR_DATE@@ 对照 历史 @@HIS_DATE@@ · 共同涨停 @@N_COMMON@@ 只(@@RATE@@%)</div>
+  <div class="stats">
+    <div class="chip">当前晋级 <b>@@CUR_TOTAL@@</b></div>
+    <div class="chip">历史晋级 <b>@@HIS_TOTAL@@</b></div>
+    <div class="chip">共同涨停 <b>@@N_COMMON@@</b></div>
+  </div>
+</header>
+@@ROWS@@
+<footer>
+@@FOOTER@@
+</footer>
+</div>
+<div id="mask"><div class="modal" style="position:relative">
+<button id="close">×</button>
+<h3 id="m-name"></h3>
+<div class="m-sub" id="m-sub"></div>
+<div class="kv">
+  <div class="cell"><div class="k">首封时间</div><div class="v" id="m-first">—</div></div>
+  <div class="cell"><div class="k">封单金额</div><div class="v" id="m-amt">—</div></div>
+  <div class="cell"><div class="k">炸板次数</div><div class="v" id="m-zbc">—</div></div>
+  <div class="cell"><div class="k">几天几板</div><div class="v" id="m-days">—</div></div>
+</div>
+<h4 class="wn">赢过(同梯队晋级)</h4><div class="opp" id="m-wins"></div>
+<h4 class="ls">输过(同梯队晋级)</h4><div class="opp" id="m-losses"></div>
+</div></div>
+<script>
+const DETAIL = @@DETAIL@@;
+function fmtAmt(v){
+  if(v===null||v===undefined||v==="")return "—";
+  v=Number(v);
+  if(v>=1e8)return (v/1e8).toFixed(2)+"亿";
+  if(v>=1e4)return (v/1e4).toFixed(1)+"万";
+  return String(v);
+}
+document.querySelectorAll(".c-card").forEach(el=>{
+  el.addEventListener("click",()=>{
+    const d=DETAIL[el.dataset.key];
+    if(!d)return;
+    document.getElementById("m-name").textContent=d.name;
+    document.getElementById("m-sub").textContent=(d.side==="cur"?"当前":"历史")+" · "+d.lb+"板"+(d.industry?" · "+d.industry:"")+(d.tags.length?" · "+d.tags.join(" / "):"");
+    document.getElementById("m-first").textContent=d.first_time||"—";
+    document.getElementById("m-amt").textContent=fmtAmt(d.order_amount);
+    const z=d.zbc;
+    document.getElementById("m-zbc").textContent=(z===null||z==="")?"—":z+" 次";
+    document.getElementById("m-days").textContent=d.high_days||"—";
+    const wl=(arr,empty)=>arr.length?arr.map(n=>{
+      const m=n.match(/^(.*)\((当前\d+板)\)$/);
+      return m?m[1]+' <em>'+m[2]+'</em>':n;
+    }).join("、"):'<span class="none">'+empty+"</span>";
+    document.getElementById("m-wins").innerHTML=wl(d.wins,"无同梯队战绩");
+    document.getElementById("m-losses").innerHTML=wl(d.losses,"无同梯队战绩");
+    document.getElementById("mask").classList.add("on");
+  });
+});
+document.getElementById("mask").addEventListener("click",e=>{
+  if(e.target.id==="mask")document.getElementById("mask").classList.remove("on");
+});
+document.getElementById("close").addEventListener("click",()=>{
+  document.getElementById("mask").classList.remove("on");
+});
+</script>
+</body>
+</html>
