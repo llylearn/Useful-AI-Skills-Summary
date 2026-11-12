@@ -1,129 +1,534 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff">
 <title>今日对照 · @@CUR_DATE@@</title>
+<script>window.__errs=0;addEventListener("error",function(){window.__errs++});</script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:#f5f6f8;color:#222;line-height:1.4}
-.wrap{max-width:1440px;margin:0 auto;padding:16px 20px 28px}
-header.top{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;padding:6px 2px 14px;border-bottom:1px solid #e5e7eb;margin-bottom:14px}
-h1{font-size:22px;font-weight:700}
-.sub{font-size:13px;color:#666}
-.stats{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
-.chip{background:#fff;border:1px solid #e5e7eb;border-radius:999px;padding:4px 12px;font-size:13px;color:#444;white-space:nowrap}
-.chip b{color:#d43030;font-weight:600}
-.row{display:grid;grid-template-columns:1fr 48px 1fr;gap:10px;margin-bottom:28px}
-.axis{display:flex;align-items:flex-start;justify-content:center;padding-top:8px}
-.axis span{font-size:13px;font-weight:600;color:#fff;background:#d43030;border-radius:999px;padding:3px 9px;white-space:nowrap}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;align-content:start}
-.c-card{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:8px 10px;cursor:pointer;min-width:0;transition:box-shadow .15s}
-.c-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.12)}
-.c-card.common{border:2px solid #356b9a;background:#fff}
-.c-card .nm{display:flex;align-items:center;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden}
-.c-card .stock-name{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.tag{display:inline-block;min-width:0;border-radius:4px;padding:1px 5px;font-size:10px;line-height:14px;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tag-region{background:#e8f1fb;color:#356b9a}
-.tag-industry{background:#fff0d9;color:#8b5b16}
-.tag-concept{background:#ffedd5;color:#c2410c}
-.c-card .nm .tag-industry{flex:0 1 auto;max-width:58%;margin-left:4px}
-.c-card .wl{display:flex;align-items:center;font-size:11px;color:#888;margin-top:3px;min-height:18px;white-space:nowrap;overflow:hidden}
-.c-card .wl .region{flex:0 1 auto;min-width:0;margin-right:6px}
-.c-card .wl .w{flex:none;color:#d43030;margin-right:6px}
-.c-card .wl .l{flex:none;color:#1a9e4b;margin-right:6px}
-.c-card .wl .fin{flex:none;color:#7c5cff}
-.c-card .seal{margin-top:3px;font-size:10px;line-height:16px;color:#8b5b16;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tags{display:flex;gap:4px;margin-top:4px;overflow:hidden;white-space:nowrap}
-.tags .tag{max-width:100%;flex:0 1 auto}
-.empty{color:#c4c8cd;font-size:12px;text-align:center;padding-top:10px}
-#mask{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:99;padding:16px}
-#mask.on{display:flex}
-.modal{background:#fff;border-radius:12px;max-width:430px;width:100%;max-height:86vh;overflow:auto;padding:20px 22px}
-.modal h3{font-size:17px;margin-bottom:2px}
-.modal .m-sub{font-size:12px;color:#888;margin-bottom:12px}
-.kv{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
-.kv .cell{background:#f7f8fa;border-radius:8px;padding:8px 10px}
-.kv .k{font-size:11px;color:#999}
-.kv .v{font-size:15px;font-weight:600;margin-top:1px}
-.modal h4{font-size:13px;margin:10px 0 5px;color:#555}
-.modal h4.wn::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#d43030;margin-right:6px}
-.modal h4.ls::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#1a9e4b;margin-right:6px}
-.opp{font-size:13px;color:#333;line-height:1.9;word-break:break-all}
-.opp em{font-style:normal;color:#fff;background:#d43030;font-size:10px;border-radius:3px;padding:0 5px;margin-left:3px;white-space:nowrap;vertical-align:1px}
-.none{font-size:12px;color:#bbb}
-#close{position:absolute;top:10px;right:14px;font-size:20px;color:#999;cursor:pointer;background:none;border:none}
-footer{margin-top:18px;padding-top:12px;border-top:1px solid #e5e7eb;font-size:12px;color:#999;line-height:1.9}
-@media(max-width:1100px){.cards{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:768px){.cards{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:1fr 36px 1fr;gap:6px}.wrap{padding:12px 10px 22px}.sub{flex:1 1 100%;order:2}.stats{order:3;margin-left:0}}
-@media(max-width:480px){.cards{grid-template-columns:1fr}.axis span{padding:2px 6px;font-size:11px}.c-card .nm{font-size:13px}}
+  :root{
+    --bg:#ffffff;
+    --text:#0f172a;
+    --muted:#64748b;
+    --line:#e8ecf2;
+    --gold:#b45309;
+    --blue:#356b9a;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(1100px 620px at 12% -12%, rgba(245,158,11,.08), transparent 62%),
+      radial-gradient(900px 520px at 92% -6%, rgba(124,58,237,.05), transparent 60%),
+      radial-gradient(800px 800px at 50% 120%, rgba(14,165,233,.04), transparent 65%),
+      var(--bg);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(15,23,42,.028) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(15,23,42,.028) 1px,transparent 1px);
+    background-size:46px 46px;
+    -webkit-mask-image:radial-gradient(circle at 50% 0%,#000,transparent 72%);
+    mask-image:radial-gradient(circle at 50% 0%,#000,transparent 72%);
+  }
+  body::after{
+    content:"";position:fixed;top:0;left:0;right:0;height:1px;z-index:5;pointer-events:none;
+    background:linear-gradient(90deg,transparent,rgba(180,83,9,.55),transparent);
+    opacity:.5;
+  }
+  ::selection{background:rgba(245,158,11,.22)}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:#fff}
+  ::-webkit-scrollbar-thumb{background:#dbe2ea;border-radius:8px;border:2px solid #fff}
+  ::-webkit-scrollbar-thumb:hover{background:#c4cfdb}
+
+  .wrap{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:0 24px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:48px 0 8px}
+  .hero-top{display:flex;align-items:flex-end;gap:26px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:15px}
+  h1{font-size:30px;line-height:1.15;margin:0;letter-spacing:1.5px;font-weight:800;white-space:nowrap}
+  .sub{margin:6px 0 0;font-size:12px;color:var(--muted);letter-spacing:.6px}
+  .sub .dot{margin:0 6px;color:#cbd5e1}
+
+  .stats{display:flex;gap:9px;flex-wrap:wrap;margin-left:auto}
+  .stat{
+    min-width:82px;padding:9px 13px;border-radius:13px;
+    border:1px solid var(--line);
+    background:#fff;
+    box-shadow:0 1px 2px rgba(16,24,40,.04);
+  }
+  .stat b{
+    display:block;font:700 23px/1.15 "DIN Alternate",ui-monospace,SFMono-Regular,Menlo,monospace;
+    letter-spacing:.5px;color:#0f172a;
+  }
+  .stat span{display:block;margin-top:2px;font-size:10px;color:var(--muted);letter-spacing:1.2px}
+  .stat.up b{color:#dc2626}
+  .stat.lb b{color:#b45309}
+  .stat.top b{color:#b45309}
+  .stat.broken b{color:#475569}
+
+  /* ---------- compare view ---------- */
+  #view-compare{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:2px 24px 8px}
+  .c-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:16px 0 2px}
+  .c-kicker{font-size:11px;letter-spacing:1.4px;font-weight:700;color:#4338ca}
+  .c-kicker span{color:#cbd5e1;margin:0 4px}
+  .c-title{margin:7px 0 0;font-size:24px;line-height:1.2;letter-spacing:.5px;font-weight:800}
+  .c-title b{font:800 24px/1 "DIN Alternate",ui-monospace,SFMono-Regular,Menlo,monospace;color:#b45309;margin:0 2px}
+  .c-title span{font-size:11px;font-weight:500;color:var(--muted);margin-left:8px;letter-spacing:.3px}
+  .c-sub{margin:7px 0 0;font-size:11.5px;line-height:1.75;color:var(--muted);max-width:790px}
+  .c-focus{
+    appearance:none;cursor:pointer;flex:none;padding:8px 13px;border-radius:999px;
+    border:1px solid #e2e8f0;background:#fff;color:#475569;
+    font-weight:600;font-size:11.5px;line-height:1;font-family:inherit;transition:.16s;
+  }
+  .c-focus:hover{border-color:#cbd5e1;background:#f8fafc}
+  .c-focus.active{background:#0f172a;border-color:#0f172a;color:#fff}
+  .c-stats{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:14px 0 12px}
+  .c-stat{
+    position:relative;overflow:hidden;padding:9px 11px 8px;border:1px solid var(--line);
+    border-radius:11px;background:#fff;box-shadow:0 1px 2px rgba(16,24,40,.03);
+  }
+  .c-stat::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--cc,#64748b)}
+  .c-stat b{display:block;font:800 21px/1.1 "DIN Alternate",ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ct,#0f172a)}
+  .c-stat span{display:block;margin-top:2px;font-size:9.5px;letter-spacing:.8px;color:var(--muted)}
+  .c-stat.cur{--cc:#f59e0b;--ct:#b45309}
+  .c-stat.his{--cc:#6366f1;--ct:#4338ca}
+  .c-stat.com{--cc:#0f172a;--ct:#0f172a;background:#fffbeb;border-color:#fde68a}
+  .c-common{
+    padding:10px 12px;border:1px solid #fde68a;border-radius:12px;
+    background:linear-gradient(180deg,#fffdf6,#fff);margin-bottom:12px;
+  }
+  .c-common-head{display:flex;align-items:baseline;gap:7px;margin-bottom:8px;font-size:11.5px}
+  .c-common-head b{font-size:12px;letter-spacing:.5px}
+  .c-common-head span{color:#b45309;font-weight:700}
+  .c-common-head em{font-style:normal;font-size:10px;color:var(--muted);margin-left:auto}
+  .c-chips{display:flex;flex-wrap:wrap;gap:6px}
+  .c-chip{
+    display:inline-flex;align-items:center;gap:5px;padding:5px 8px;
+    border:1px solid #eceff4;border-radius:7px;background:#fff;
+    font-size:10.5px;box-shadow:0 1px 1px rgba(16,24,40,.03);white-space:nowrap;
+  }
+  .c-chip b{font-weight:700;color:#0f172a}
+  .c-chip i{font-style:normal;font-weight:700}
+  .c-chip .cb{color:#b45309}
+  .c-chip .hb{color:#4338ca}
+  .c-chip em{font-style:normal;color:#cbd5e1;font-size:9px}
+
+  .c-mhead{
+    position:sticky;top:0;z-index:18;
+    display:grid;grid-template-columns:minmax(0,1fr) 52px minmax(0,1fr);gap:10px;align-items:end;
+    padding:9px 0 10px;background:rgba(255,255,255,.94);
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+    border-bottom:1px dashed #93c5fd;
+  }
+  .c-side{display:flex;flex-direction:column;gap:3px;min-width:0}
+  .c-side>div{display:flex;align-items:center;gap:7px}
+  .c-side.his{text-align:right;align-items:flex-end}
+  .c-side.his>div{flex-direction:row-reverse}
+  .c-side b{font:800 15px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.4px}
+  .c-side.cur b{color:#b45309}
+  .c-side.his b{color:#4338ca}
+  .c-side i{font-style:normal;font-size:10px;color:var(--muted)}
+  .c-badge{font-size:9px;font-weight:700;letter-spacing:.8px;padding:2px 6px;border-radius:5px}
+  .c-side.cur .c-badge{color:#b45309;background:#fef3c7;border:1px solid #fde68a}
+  .c-side.his .c-badge{color:#4338ca;background:#eef2ff;border:1px solid #c7d2fe}
+  .c-vs{
+    justify-self:center;align-self:end;width:30px;height:30px;border-radius:50%;
+    display:grid;place-items:center;background:#fff;border:1px solid #e2e8f0;
+    font:800 9px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:#94a3b8;letter-spacing:.4px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04);margin-bottom:4px;
+  }
+  .c-rows{position:relative;padding-bottom:4px}
+  .c-rows::before{content:"";position:absolute;top:0;bottom:0;left:calc(50% - .5px);border-left:1px dashed #93c5fd}
+  .c-row{
+    position:relative;display:grid;grid-template-columns:minmax(0,1fr) 52px minmax(0,1fr);gap:10px;
+    padding:12px 0;border-top:1px dashed #93c5fd;align-items:stretch;
+  }
+  .c-row:first-child{border-top:0;padding-top:16px}
+  .c-cell{min-width:0}
+  .c-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;align-content:start}
+  .c-none{
+    display:flex;align-items:center;justify-content:center;min-height:96px;
+    border:1px dashed #93c5fd;border-radius:11px;background:#f8fbff;color:#94a3b8;font-size:11px;
+  }
+  .c-rail{display:flex;flex-direction:column;align-items:center;gap:3px;padding-top:6px;position:relative;z-index:1}
+  .c-rail b{
+    width:40px;height:40px;border-radius:11px;display:grid;place-items:center;
+    background:#fff;border:1px solid #e2e8f0;color:#0f172a;
+    font:800 18px/1 "DIN Alternate",ui-monospace,SFMono-Regular,Menlo,monospace;
+    box-shadow:0 1px 2px rgba(16,24,40,.04);
+  }
+  .c-rail span{font-size:8.5px;letter-spacing:2px;color:#94a3b8}
+
+  /* ---------- compare card ---------- */
+  .c-card{
+    position:relative;display:flex;flex-direction:column;min-width:0;overflow:hidden;
+    padding:9px 10px 8px 11px;border-radius:10px;
+    border:1px solid #e8ecf2;background:#fff;
+    box-shadow:0 1px 2px rgba(16,24,40,.04);
+    cursor:pointer;
+    transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;
+  }
+  .c-card::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:linear-gradient(180deg,var(--c,#94a3b8),rgba(var(--c-rgb,148,163,184),.25));
+  }
+  .c-cell.cur .c-card{--c:#f59e0b;--c-rgb:245,158,11}
+  .c-cell.his .c-card{--c:#6366f1;--c-rgb:99,102,241}
+  .c-card:hover{transform:translateY(-2px);border-color:rgba(var(--c-rgb,148,163,184),.45);box-shadow:0 10px 24px rgba(16,24,40,.09)}
+  .c-card.common{border:2px solid #356b9a;background:#fff;box-shadow:0 0 0 3px rgba(53,107,154,.07),0 1px 2px rgba(16,24,40,.04)}
+  .c-card.common:hover{border-color:#2f5f88;box-shadow:0 0 0 3px rgba(53,107,154,.12),0 10px 24px rgba(16,24,40,.10)}
+  .c-card .card-head{display:flex;align-items:center;gap:4px;min-width:0}
+  .c-card .name{
+    margin:0;flex:0 0 auto;min-width:0;
+    font-size:15px;line-height:1.25;font-weight:750;letter-spacing:.3px;color:#0f172a;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .tag{display:inline-block;min-width:0;border-radius:4px;padding:1px 5px;font-size:10px;line-height:14px;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tag-region{background:#e8f1fb;color:#356b9a}
+  .tag-industry{background:#fff0d9;color:#8b5b16}
+  .tag-concept{background:#ffedd5;color:#c2410c}
+  .c-card .tag{font-size:9px;line-height:1.1;padding:2.6px 4.5px}
+  .c-card .tag-industry{flex:0 1 auto;min-width:0;max-width:46%;margin-left:1px}
+  .c-card .fin{
+    flex:none;margin-left:auto;font-size:8.5px;font-weight:800;line-height:1;letter-spacing:.2px;
+    padding:2.5px 4.5px;border-radius:4px;background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;white-space:nowrap;
+  }
+  .c-card .c-rg-row{display:flex;align-items:center;gap:4px;min-width:0;min-height:14px;margin:4px 0 0;overflow:hidden;white-space:nowrap}
+  .c-card .region{flex:0 1 auto;min-width:0;background:#e8f1fb;color:#356b9a}
+  .c-card .wl{flex:none;font-size:8.5px;font-weight:700;line-height:1;letter-spacing:.2px;white-space:nowrap}
+  .c-card .wl.w{color:#d43030}
+  .c-card .wl.l{color:#1a9e4b}
+  .c-card .seal{
+    margin-top:3px;font-size:9px;line-height:15px;color:#8b5b16;
+    font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .c-card .tags{display:flex;flex-wrap:nowrap;gap:3px;margin-top:3px;min-width:0;overflow:hidden;white-space:nowrap}
+  .c-card .tags .tag{flex:0 1 auto;max-width:100%}
+  #view-compare.focus .c-card:not(.common){opacity:.2;filter:grayscale(.55)}
+  #view-compare.focus .c-card:not(.common):hover{opacity:.45}
+  .c-note{margin:12px 0 0;padding-top:10px;border-top:1px solid var(--line);font-size:10px;line-height:1.8;color:#7c8798}
+
+  /* ---------- footer ---------- */
+  footer{position:relative;z-index:1;max-width:1240px;margin:10px auto 0;padding:18px 24px 46px}
+  .foot-inner{
+    border-top:1px solid var(--line);padding-top:16px;
+    font-size:11.5px;line-height:1.95;color:#64748b;
+  }
+  .foot-inner b{color:#475569;font-weight:600}
+  .foot-inner .sep{margin:0 6px;color:#cbd5e1}
+
+  /* ---------- modal ---------- */
+  .modal{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
+  .modal[hidden]{display:none!important}
+  body.modal-open{overflow:hidden}
+  .modal-backdrop{position:absolute;inset:0;background:rgba(15,23,42,.48);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+  .modal-panel{
+    position:relative;z-index:1;width:min(760px,100%);max-height:88vh;overflow:auto;outline:none;
+    background:#fff;border-radius:18px;padding:22px 24px 18px;
+    box-shadow:0 24px 70px rgba(15,23,42,.28);-webkit-overflow-scrolling:touch;
+  }
+  .modal-close{
+    position:absolute;top:12px;right:14px;width:30px;height:30px;border:0;border-radius:50%;
+    background:#f1f5f9;color:#64748b;font-size:20px;line-height:1;cursor:pointer;display:grid;place-items:center;
+  }
+  .modal-close:hover{background:#e2e8f0;color:#0f172a}
+  .modal-close:focus{outline:none}
+  .modal-close:focus-visible{outline:2px solid #93c5fd;outline-offset:2px}
+  .modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding-right:32px}
+  .modal-kicker{font-size:10px;font-weight:700;letter-spacing:1.2px;color:#64748b}
+  .modal-title{margin:5px 0 0;font-size:24px;line-height:1.2;font-weight:800;letter-spacing:.5px;color:#0f172a}
+  .modal-board{
+    flex:none;padding:6px 10px;border-radius:9px;background:#fffbeb;border:1px solid #fde68a;
+    color:#b45309;font:800 16px/1 "DIN Alternate",ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.5px;
+  }
+  .modal-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+  .m-tag{font-size:10px;line-height:1;padding:4px 7px;border-radius:5px;background:#ffedd5;color:#c2410c;border:1px solid #fed7aa}
+  .m-tag i{font-style:normal;font-size:8.5px;font-weight:600;opacity:.62;margin-right:3px;letter-spacing:.3px}
+  .m-tag.industry{background:#fff0d9;color:#8b5b16;border-color:#fde3bd}
+  .m-region{display:inline-flex;align-items:baseline;gap:4px;font-size:10px;line-height:1;padding:4px 7px;border-radius:5px;background:#e8f1fb;border:1px solid #cfe3fb;color:#356b9a;font-weight:700}
+  .m-region i{font-style:normal;font-size:8.5px;font-weight:600;color:#7ba7d8;letter-spacing:.3px}
+  .modal-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:15px 0 12px}
+  .m-metric{padding:9px 11px;border:1px solid #eef2f7;border-radius:10px;background:#fbfcfe}
+  .m-metric span{display:block;font-size:9px;letter-spacing:.8px;color:#94a3b8}
+  .m-metric b{display:block;margin-top:3px;font:700 16px/1.2 "DIN Alternate",ui-monospace,SFMono-Regular,Menlo,monospace;color:#0f172a}
+  .modal-status{padding:8px 10px;border-radius:9px;background:#f8fafc;border:1px solid #eef2f7;font-size:11px;line-height:1.7;color:#64748b}
+  .rival-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+  .rival-block{border:1px solid #e2e8f0;border-radius:12px;padding:11px 12px;background:#fff}
+  .rival-block.won{background:#f7fdf9;border-color:#d1fae5}
+  .rival-block.lost{background:#fff7f8;border-color:#fecdd3}
+  .rival-block h3{display:flex;align-items:baseline;gap:6px;margin:0;font-size:12px;letter-spacing:.4px;color:#0f172a}
+  .rival-block h3 b{font:800 13px/1 "DIN Alternate",ui-monospace,SFMono-Regular,Menlo,monospace;color:#15803d}
+  .rival-block.lost h3 b{color:#be123c}
+  .rival-note{margin:4px 0 8px;font-size:9.5px;line-height:1.55;color:#94a3b8}
+  .rival-list{list-style:none;margin:0;padding:0;max-height:230px;overflow-y:auto;overflow-x:hidden}
+  .rival-list li{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:6px 0;border-top:1px dashed #eef2f7;font-size:11px}
+  .rival-list li:first-child{border-top:0}
+  .rival-name{font-weight:700;color:#334155;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rival-cur{flex:none;font-size:8.5px;font-weight:800;color:#fff;background:#d43030;border-radius:3px;padding:1px 5px;white-space:nowrap}
+  .rival-empty{padding:8px 0;color:#cbd5e1;font-size:10.5px;justify-content:flex-start!important}
+  .modal-note{margin:12px 0 0;font-size:9.5px;line-height:1.7;color:#94a3b8}
+
+  @media (max-width:1100px){
+    .c-cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .c-stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .c-title{font-size:22px}
+  }
+  @media (max-width:900px){
+    .c-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .c-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .c-title{font-size:21px}
+  }
+  @media (max-width:760px){
+    .wrap{padding:0 16px}
+    .hero{padding:34px 0 6px}
+    h1{font-size:24px;letter-spacing:1px}
+    .stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;width:100%}
+    .stat{min-width:0;padding:7px 8px;border-radius:11px}
+    .stat b{font-size:16px}
+    .stat span{font-size:8.5px;letter-spacing:.4px}
+    #view-compare{padding:0 16px}
+    .c-head{padding:12px 0 0}
+    .c-title{font-size:19px}
+    .c-title b{font-size:19px}
+    .c-sub{font-size:10.5px}
+    .c-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+    .c-stat b{font-size:19px}
+    .c-common-head em{display:none}
+    .c-mhead{grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr);gap:8px}
+    .c-row{grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr);gap:8px;padding:10px 0}
+    .c-rail b{width:32px;height:32px;border-radius:9px;font-size:15px}
+    .c-rail span{font-size:8px;letter-spacing:1px}
+    .c-side b{font-size:12.5px}
+    .c-side i{font-size:9px}
+    .c-badge{font-size:8px;padding:2px 4px}
+    .c-vs{width:25px;height:25px;font-size:8px}
+    .c-none{min-height:82px;font-size:10px}
+    .c-card{padding:8px 9px 8px 10px}
+    .c-card .name{font-size:15px}
+    .c-card .c-rg-row{min-height:14px}
+    .c-card .tag{font-size:9px}
+    .c-chip{font-size:10px;padding:5px 7px}
+    footer{padding:16px 16px 38px}
+    .modal{padding:0;align-items:flex-end}
+    .modal-panel{width:100%;max-height:92vh;border-radius:16px 16px 0 0;padding:18px 16px 16px}
+    .modal-title{font-size:21px}
+    .modal-board{font-size:14px;padding:5px 8px}
+    .modal-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+    .m-metric{padding:8px 9px}
+    .m-metric b{font-size:14px}
+    .rival-grid{grid-template-columns:1fr}
+    .rival-list{max-height:180px}
+    .modal-note{font-size:9px}
+  }
+  @media (max-width:480px){
+    .stats .stat b{font-size:15px}
+    .c-cards{grid-template-columns:1fr}
+    .c-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .c-card .name{font-size:15.5px}
+  }
 </style>
 </head>
-<body>
+<body data-total="@@CUR_TOTAL@@">
 <div class="wrap">
-<header class="top">
-  <h1>今日对照</h1>
-  <div class="sub">当前 @@CUR_DATE@@ 对照 历史 @@HIS_DATE@@ · 共同涨停 @@N_COMMON@@ 只(@@RATE@@%)</div>
-  <div class="stats">
-    <div class="chip">当前晋级 <b>@@CUR_TOTAL@@</b></div>
-    <div class="chip">历史晋级 <b>@@HIS_TOTAL@@</b></div>
-    <div class="chip">共同涨停 <b>@@N_COMMON@@</b></div>
-  </div>
-</header>
-@@ROWS@@
+  <header class="hero">
+    <div class="hero-top">
+      <div class="brand">
+        <div>
+          <h1>今日对照</h1>
+          <p class="sub">@@DATE_CN@@<span class="dot">·</span>收盘<span class="dot">·</span>@@CUR_TOTAL@@ 只涨停<span class="dot">·</span>历史对照</p>
+        </div>
+      </div>
+      <div class="stats">@@HERO_STATS@@</div>
+    </div>
+  </header>
+</div>
+
+@@COMPARE@@
+
 <footer>
-@@FOOTER@@
+  <div class="foot-inner">@@FOOTER@@</div>
 </footer>
+
+<div class="modal" id="stockModal" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="stockModalTitle" tabindex="-1">
+    <button class="modal-close" id="stockModalClose" type="button" aria-label="关闭">×</button>
+    <div class="modal-head">
+      <div>
+        <div class="modal-kicker" id="m-kicker">当前</div>
+        <h2 class="modal-title" id="m-name">股票</h2>
+        <div class="modal-tags" id="m-tags"></div>
+      </div>
+      <div class="modal-board" id="m-board">—</div>
+    </div>
+    <div class="modal-metrics">
+      <div class="m-metric"><span>首封时间</span><b id="m-first">—</b></div>
+      <div class="m-metric"><span>封单金额</span><b id="m-amt">—</b></div>
+      <div class="m-metric"><span>炸板次数</span><b id="m-zbc">—</b></div>
+      <div class="m-metric"><span>几天几板</span><b id="m-days">—</b></div>
+    </div>
+    <div class="modal-status" id="m-sub"></div>
+    <div class="rival-grid">
+      <section class="rival-block won">
+        <h3>赢过对手 <b id="m-wins-n">0 只</b></h3>
+        <p class="rival-note">同梯队 3 板+，本股次日晋级、对手未晋级</p>
+        <ul class="rival-list" id="m-wins"></ul>
+      </section>
+      <section class="rival-block lost">
+        <h3>输过对手 <b id="m-losses-n">0 只</b></h3>
+        <p class="rival-note">同梯队 3 板+，对手次日晋级、本股未晋级</p>
+        <ul class="rival-list" id="m-losses"></ul>
+      </section>
+    </div>
+    <p class="modal-note">统计口径：开盘啦历史涨停池，同板数 3 板+，次日 lb = 当日 lb+1 判定晋级；统计范围为整个历史池（2020 起），停牌日跳过。「当前N板」为 @@CUR_DATE@@ 当前连板天梯中的板数，仅标注当前天梯出现的对手。历史源无炸板次数，显示 —。北交所无历史池数据。</p>
+  </div>
 </div>
-<div id="mask"><div class="modal" style="position:relative">
-<button id="close">×</button>
-<h3 id="m-name"></h3>
-<div class="m-sub" id="m-sub"></div>
-<div class="kv">
-  <div class="cell"><div class="k">首封时间</div><div class="v" id="m-first">—</div></div>
-  <div class="cell"><div class="k">封单金额</div><div class="v" id="m-amt">—</div></div>
-  <div class="cell"><div class="k">炸板次数</div><div class="v" id="m-zbc">—</div></div>
-  <div class="cell"><div class="k">几天几板</div><div class="v" id="m-days">—</div></div>
-</div>
-<h4 class="wn">赢过(同梯队晋级)</h4><div class="opp" id="m-wins"></div>
-<h4 class="ls">输过(同梯队晋级)</h4><div class="opp" id="m-losses"></div>
-</div></div>
+
 <script>
 const DETAIL = @@DETAIL@@;
-function fmtAmt(v){
-  if(v===null||v===undefined||v==="")return "—";
-  v=Number(v);
-  if(v>=1e8)return (v/1e8).toFixed(2)+"亿";
-  if(v>=1e4)return (v/1e4).toFixed(1)+"万";
-  return String(v);
-}
-document.querySelectorAll(".c-card").forEach(el=>{
-  el.addEventListener("click",()=>{
-    const d=DETAIL[el.dataset.key];
-    if(!d)return;
-    document.getElementById("m-name").textContent=d.name;
-    document.getElementById("m-sub").textContent=(d.side==="cur"?"当前":"历史")+" · "+d.lb+"板"+(d.industry?" · "+d.industry:"")+(d.tags.length?" · "+d.tags.join(" / "):"");
-    document.getElementById("m-first").textContent=d.first_time||"—";
-    document.getElementById("m-amt").textContent=fmtAmt(d.order_amount);
-    const z=d.zbc;
-    document.getElementById("m-zbc").textContent=(z===null||z==="")?"—":z+" 次";
-    document.getElementById("m-days").textContent=d.high_days||"—";
-    const wl=(arr,empty)=>arr.length?arr.map(n=>{
-      const m=n.match(/^(.*)\((当前\d+板)\)$/);
-      return m?m[1]+' <em>'+m[2]+'</em>':n;
-    }).join("、"):'<span class="none">'+empty+"</span>";
-    document.getElementById("m-wins").innerHTML=wl(d.wins,"无同梯队战绩");
-    document.getElementById("m-losses").innerHTML=wl(d.losses,"无同梯队战绩");
-    document.getElementById("mask").classList.add("on");
+(function(){
+  var cmpView = document.getElementById('view-compare');
+  var focusBtn = document.getElementById('cFocusBtn');
+  if(focusBtn && cmpView){
+    focusBtn.addEventListener('click', function(){
+      var on = cmpView.classList.toggle('focus');
+      focusBtn.classList.toggle('active', on);
+      focusBtn.textContent = on ? '显示全部' : '聚焦共同票';
+    });
+  }
+
+  var modal = document.getElementById('stockModal');
+  if(!modal) return;
+  var lastCard = null;
+
+  function boardText(n){ return n <= 1 ? '首板' : n + '板'; }
+  function fmtAmt(v){
+    if(v === null || v === undefined || v === '') return '—';
+    v = Number(v);
+    if(!isFinite(v)) return '—';
+    if(Math.abs(v) >= 1e8) return (v / 1e8).toFixed(2) + '亿';
+    if(Math.abs(v) >= 1e4) return Math.round(v / 1e4) + '万';
+    return String(v);
+  }
+  function fmtHands(v){
+    if(v === null || v === undefined || v === '') return '—';
+    v = Number(v);
+    if(!isFinite(v)) return '—';
+    if(Math.abs(v) >= 1e8) return (v / 1e8).toFixed(2) + '亿手';
+    if(Math.abs(v) >= 1e4) return (v / 1e4).toFixed(1) + '万手';
+    return Math.round(v) + '手';
+  }
+  function addTag(cls, label, text){
+    var el = document.createElement('span');
+    el.className = cls;
+    if(label){
+      var i = document.createElement('i');
+      i.textContent = label;
+      el.appendChild(i);
+    }
+    el.appendChild(document.createTextNode(text));
+    document.getElementById('m-tags').appendChild(el);
+  }
+  function fillList(ul, items, empty){
+    ul.textContent = '';
+    if(!items || !items.length){
+      var li = document.createElement('li');
+      li.className = 'rival-empty';
+      li.textContent = empty;
+      ul.appendChild(li);
+      return;
+    }
+    items.forEach(function(raw){
+      var name = String(raw), badge = '';
+      var m = name.match(/^(.*)[(（]当前(\d+)板[)）]$/);
+      if(m){ name = m[1]; badge = '当前' + m[2] + '板'; }
+      var li = document.createElement('li');
+      var nm = document.createElement('span');
+      nm.className = 'rival-name';
+      nm.textContent = name;
+      li.appendChild(nm);
+      if(badge){
+        var b = document.createElement('span');
+        b.className = 'rival-cur';
+        b.textContent = badge;
+        li.appendChild(b);
+      }
+      ul.appendChild(li);
+    });
+  }
+  function openModal(card){
+    var d = DETAIL[card.dataset.key];
+    if(!d) return;
+    document.getElementById('m-kicker').textContent = (d.side === 'cur' ? '当前' : '历史') + ' · ' + d.date;
+    document.getElementById('m-name').textContent = d.name;
+    document.getElementById('m-board').textContent = boardText(d.lb);
+    var tagsEl = document.getElementById('m-tags');
+    tagsEl.textContent = '';
+    if(d.region) addTag('m-region', '地域', d.region);
+    if(d.industry) addTag('m-tag industry', '行业', d.industry);
+    (d.tags || []).forEach(function(t){ addTag('m-tag', '', t); });
+
+    document.getElementById('m-first').textContent = d.first_time || '—';
+    document.getElementById('m-amt').textContent = fmtAmt(d.order_amount);
+    var z = d.zbc;
+    document.getElementById('m-zbc').textContent = (z === null || z === undefined || z === '') ? '—' : z + ' 次';
+    document.getElementById('m-days').textContent = d.high_days || '—';
+
+    var bits = [boardText(d.lb)];
+    if(d.industry) bits.push(d.industry);
+    if(d.region) bits.push(d.region);
+    bits.push('封单 ' + (d.order_amount === null || d.order_amount === undefined ? '—' : fmtAmt(d.order_amount)) + ' / ' + fmtHands(d.order_hands));
+    if(d.side === 'his' && d.final_lb) bits.push('终' + d.final_lb + '板');
+    document.getElementById('m-sub').textContent = (d.side === 'cur' ? '当前日' : '历史日') + ' · ' + d.date + ' · ' + bits.join(' · ');
+
+    var wins = d.wins || [], losses = d.losses || [];
+    document.getElementById('m-wins-n').textContent = wins.length + ' 只';
+    document.getElementById('m-losses-n').textContent = losses.length + ' 只';
+    fillList(document.getElementById('m-wins'), wins, '暂无赢过的同梯队对手');
+    fillList(document.getElementById('m-losses'), losses, '暂无输过的同梯队对手');
+
+    lastCard = card;
+    modal.hidden = false;
+    document.body.classList.add('modal-open');
+    var panel = modal.querySelector('.modal-panel');
+    panel.scrollTop = 0;
+    panel.focus({preventScroll:true});
+  }
+  function closeModal(){
+    modal.hidden = true;
+    document.body.classList.remove('modal-open');
+    if(lastCard) lastCard.focus();
+  }
+  if(cmpView && cmpView.addEventListener){
+    cmpView.addEventListener('click', function(e){
+      var card = e.target.closest('.c-card');
+      if(card) openModal(card);
+    });
+    cmpView.addEventListener('keydown', function(e){
+      if(e.key !== 'Enter' && e.key !== ' ') return;
+      var card = e.target.closest('.c-card');
+      if(card){ e.preventDefault(); openModal(card); }
+    });
+  }
+  document.getElementById('stockModalClose').addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e){
+    if(e.target.hasAttribute('data-close')) closeModal();
   });
-});
-document.getElementById("mask").addEventListener("click",e=>{
-  if(e.target.id==="mask")document.getElementById("mask").classList.remove("on");
-});
-document.getElementById("close").addEventListener("click",()=>{
-  document.getElementById("mask").classList.remove("on");
-});
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && !modal.hidden) closeModal();
+  });
+})();
 </script>
 </body>
 </html>
