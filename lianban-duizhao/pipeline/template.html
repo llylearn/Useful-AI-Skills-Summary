@@ -150,6 +150,7 @@
   }
   .c-rows{position:relative;padding-bottom:4px}
   .c-rows::before{content:"";position:absolute;top:0;bottom:0;left:calc(50% - .5px);border-left:1px dashed #93c5fd}
+  .row{margin-bottom:28px}
   .c-row{
     position:relative;display:grid;grid-template-columns:minmax(0,1fr) 52px minmax(0,1fr);gap:10px;
     padding:12px 0;border-top:1px dashed #93c5fd;align-items:stretch;
@@ -186,11 +187,11 @@
   .c-cell.cur .c-card{--c:#f59e0b;--c-rgb:245,158,11}
   .c-cell.his .c-card{--c:#6366f1;--c-rgb:99,102,241}
   .c-card:hover{transform:translateY(-2px);border-color:rgba(var(--c-rgb,148,163,184),.45);box-shadow:0 10px 24px rgba(16,24,40,.09)}
-  .c-card.common{border:2px solid #356b9a;background:#fff;box-shadow:0 0 0 3px rgba(53,107,154,.07),0 1px 2px rgba(16,24,40,.04)}
-  .c-card.common:hover{border-color:#2f5f88;box-shadow:0 0 0 3px rgba(53,107,154,.12),0 10px 24px rgba(16,24,40,.10)}
+  .c-card.common{border:2px solid #356b9a;background:#fff}
+  .c-card.common:hover{border-color:#356b9a;box-shadow:0 10px 24px rgba(16,24,40,.09)}
   .c-card .card-head{display:flex;align-items:center;gap:4px;min-width:0}
   .c-card .name{
-    margin:0;flex:0 0 auto;min-width:0;
+    margin:0;flex:1 1 auto;min-width:0;
     font-size:15px;line-height:1.25;font-weight:750;letter-spacing:.3px;color:#0f172a;
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   }
@@ -198,7 +199,7 @@
   .tag-region{background:#e8f1fb;color:#356b9a}
   .tag-industry{background:#fff0d9;color:#8b5b16}
   .tag-concept{background:#ffedd5;color:#c2410c}
-  .c-card .tag{font-size:9px;line-height:1.1;padding:2.6px 4.5px}
+  .c-card .tag{font-size:10px;line-height:14px;padding:1px 5px}
   .c-card .tag-industry{flex:0 1 auto;min-width:0;max-width:46%;margin-left:1px}
   .c-card .fin{
     flex:none;margin-left:auto;font-size:8.5px;font-weight:800;line-height:1;letter-spacing:.2px;
@@ -211,8 +212,10 @@
   .c-card .wl.l{color:#1a9e4b}
   .c-card .seal{
     margin-top:3px;font-size:9px;line-height:15px;color:#8b5b16;
-    font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    font-variant-numeric:tabular-nums;overflow:hidden;
   }
+  .c-card .seal .seal-line{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .c-card .seal .seal-line:last-child{color:#356b9a;font-weight:700}
   .c-card .tags{display:flex;flex-wrap:nowrap;gap:3px;margin-top:3px;min-width:0;overflow:hidden;white-space:nowrap}
   .c-card .tags .tag{flex:0 1 auto;max-width:100%}
   #view-compare.focus .c-card:not(.common){opacity:.2;filter:grayscale(.55)}
@@ -317,7 +320,7 @@
     .c-card{padding:8px 9px 8px 10px}
     .c-card .name{font-size:15px}
     .c-card .c-rg-row{min-height:14px}
-    .c-card .tag{font-size:9px}
+    .c-card .tag{font-size:10px}
     .c-chip{font-size:10px;padding:5px 7px}
     footer{padding:16px 16px 38px}
     .modal{padding:0;align-items:flex-end}
@@ -421,14 +424,6 @@ const DETAIL = @@DETAIL@@;
     if(Math.abs(v) >= 1e4) return Math.round(v / 1e4) + '万';
     return String(v);
   }
-  function fmtHands(v){
-    if(v === null || v === undefined || v === '') return '—';
-    v = Number(v);
-    if(!isFinite(v)) return '—';
-    if(Math.abs(v) >= 1e8) return (v / 1e8).toFixed(2) + '亿手';
-    if(Math.abs(v) >= 1e4) return (v / 1e4).toFixed(1) + '万手';
-    return Math.round(v) + '手';
-  }
   function addTag(cls, label, text){
     var el = document.createElement('span');
     el.className = cls;
@@ -488,7 +483,7 @@ const DETAIL = @@DETAIL@@;
     var bits = [boardText(d.lb)];
     if(d.industry) bits.push(d.industry);
     if(d.region) bits.push(d.region);
-    bits.push('封单 ' + (d.order_amount === null || d.order_amount === undefined ? '—' : fmtAmt(d.order_amount)) + ' / ' + fmtHands(d.order_hands));
+    (d.seal_lines || []).forEach(function(line){ bits.push(line); });
     if(d.side === 'his' && d.final_lb) bits.push('终' + d.final_lb + '板');
     document.getElementById('m-sub').textContent = (d.side === 'cur' ? '当前日' : '历史日') + ' · ' + d.date + ' · ' + bits.join(' · ');
 

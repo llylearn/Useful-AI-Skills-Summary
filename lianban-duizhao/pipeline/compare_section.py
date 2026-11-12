@@ -20,15 +20,15 @@ BASE = Path(__file__).resolve().parent
 def is_bj(code):
     return code.startswith(("8", "4", "920"))
 
-def seal_hands(amount, close_price):
-    """收盘封单手数 = 封单额(元) / 当日收盘价(元) / 100；缺数据时不编造。"""
+def seal_turnover_pct(amount, turnover_amount):
+    """封单额/全天成交额百分比；保留原始浮点值，展示时再格式化为两位小数。"""
     try:
-        if amount is None or close_price is None:
+        if amount is None or turnover_amount is None:
             return None
-        amount, close_price = float(amount), float(close_price)
-        if amount < 0 or close_price <= 0:
+        amount, turnover_amount = float(amount), float(turnover_amount)
+        if amount < 0 or turnover_amount <= 0:
             return None
-        return amount / close_price / 100
+        return amount / turnover_amount * 100
     except (TypeError, ValueError, ZeroDivisionError):
         return None
 
@@ -132,6 +132,12 @@ def main():
         concept_src = raw.get("_src", "")
     if not extra:
         print("!! 无 stock_extra.json,卡片将没有领涨概念/行业(先跑 fetch_concepts.py)")
+    turnover_f = BASE / "turnover_amount.json"
+    turnover = {}
+    if turnover_f.exists():
+        turnover = json.loads(turnover_f.read_text("utf-8")).get("dates", {})
+    if not turnover:
+        print("!! 无 turnover_amount.json,全天成交额与封成比将留空(先跑 fetch_turnover.py)")
     name_of = {}
     for d in dates:
         for s in hist[d]["stocks"]:
@@ -160,6 +166,8 @@ def main():
                 out.append(nm)
             return out
         ex = extra.get(code) or {}
+        card_date = CUR_DATE if side == "cur" else target
+        turnover_amount = (turnover.get(card_date) or {}).get(code)
         item = {
             "code": code, "name": s["name"], "lb": s["lb"],
             "common": code in common_codes,
@@ -168,8 +176,8 @@ def main():
             "side": side,
             "industry": ex.get("industry", ""),
             "region": ex.get("region", ""),
-            "close_price": s.get("close_price"),
-            "order_hands": seal_hands(s.get("order_amount"), s.get("close_price")),
+            "turnover_amount": turnover_amount,
+            "seal_turnover_pct": seal_turnover_pct(s.get("order_amount"), turnover_amount),
         }
         if side == "cur":
             item.update({

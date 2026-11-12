@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """开盘啦某日各板位详情 -> 回填 kaipan_history.json[date]
 用法: python3 fetch_kaipan_detail.py 2024-11-05
-字段(见 SKILL.md):[0]代码 [1]名称 [4]首封时间戳 [5]当日原因 [6]封单额 [12]所属板块(历史勿用) [18]几天几板 [21]收盘价
+字段(见 SKILL.md):[0]代码 [1]名称 [4]首封时间戳 [5]当日原因 [6]封单额 [11]全天成交额(元) [12]所属板块(历史勿用) [18]几天几板 [21]收盘价
 """
 import requests, json, gzip, uuid, time, sys, datetime as dt
 from pathlib import Path
@@ -49,6 +49,8 @@ def fetch_detail(date):
                 "first_time": hhmm(row[4]),
                 "reason": row[5] or "",
                 "order_amount": row[6],
+                # 全天成交额(元)；已与东财日K f57 抽样逐元核对。
+                "turnover_amount": row[11] if len(row) > 11 and row[11] != "" else None,
                 "close_price": row[21] if len(row) > 21 and row[21] else None,
                 "high_days": row[18] or "",
             }

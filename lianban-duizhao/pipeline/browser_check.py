@@ -96,7 +96,15 @@ def main():
             nt_exp = sum(len(c["tags"][:2]) for c in d["cur_cards"] + d["his_cards"])
             assert nt == nt_exp, f"{w}px 概念 tag 数 {nt} != {nt_exp}"
             ns = ev(ws, "document.querySelectorAll('.c-card .seal').length")
-            assert ns == n_cards, f"{w}px 封单行 {ns} != {n_cards}"
+            assert ns == n_cards, f"{w}px 封单区块 {ns} != {n_cards}"
+            nsl = ev(ws, "document.querySelectorAll('.c-card .seal .seal-line').length")
+            assert nsl == n_cards * 3, f"{w}px 封单/成交/占比行 {nsl} != {n_cards * 3}"
+            bad_pct = ev(ws, r"""[...document.querySelectorAll('.c-card .seal')].filter(e=>{
+                const lines=e.querySelectorAll('.seal-line');
+                return lines.length!==3||!/^封单\/成交 (?:\d+\.\d{2}%|—)$/.test(lines[2].textContent)}).length""")
+            assert bad_pct == 0, f"{w}px 有 {bad_pct} 张卡片封成比不是两位小数或不在末行"
+            bad_row_gap = ev(ws, "[...document.querySelectorAll('.c-row')].filter(e=>getComputedStyle(e).marginBottom!=='28px').length")
+            assert bad_row_gap == 0, f"{w}px 有 {bad_row_gap} 个板数行间距不是 28px"
             nrail = ev(ws, "document.querySelectorAll('.c-rail').length")
             assert nrail == n_boards, f"{w}px 板数轴 {nrail} != {n_boards}"
             nchip = ev(ws, "document.querySelectorAll('.c-chip').length")
@@ -129,8 +137,8 @@ def main():
             assert bad == 0, f"{w}px 有 {bad} 个 .tags 溢出"
             bad_chip = ev(ws, "[...document.querySelectorAll('.c-chip')].filter(t=>t.scrollWidth>t.clientWidth).length")
             assert bad_chip == 0, f"{w}px 有 {bad_chip} 个共同胶囊溢出"
-            bad_seal = ev(ws, "[...document.querySelectorAll('.seal')].filter(t=>t.scrollWidth>t.clientWidth).length")
-            assert bad_seal == 0, f"{w}px 有 {bad_seal} 个封单行溢出"
+            bad_seal = ev(ws, "[...document.querySelectorAll('.seal,.seal-line')].filter(t=>t.scrollWidth>t.clientWidth).length")
+            assert bad_seal == 0, f"{w}px 有 {bad_seal} 个封单/成交/占比行溢出"
             bad_seal_order = ev(ws, """[...document.querySelectorAll('.c-card')].filter(e=>{
                 const wl=e.querySelector('.c-rg-row'),seal=e.querySelector('.seal'),tags=e.querySelector('.tags');
                 return !wl||!seal||!tags||!(wl.compareDocumentPosition(seal)&Node.DOCUMENT_POSITION_FOLLOWING)

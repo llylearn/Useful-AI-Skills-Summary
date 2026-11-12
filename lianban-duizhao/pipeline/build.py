@@ -36,26 +36,26 @@ def fmt_amt(v):
     return f"{v:.0f}元"
 
 
-def fmt_hands(v):
+def fmt_pct(v):
+    """封单额/成交额百分比固定保留两位小数，不取整。"""
     if v is None or v == "":
         return "—"
     try:
-        v = float(v)
+        return f"{float(v):.2f}%"
     except (TypeError, ValueError):
         return "—"
-    if abs(v) >= 1e8:
-        return f"{v / 1e8:.2f}亿手"
-    if abs(v) >= 1e4:
-        return f"{v / 1e4:.1f}万手"
-    return f"{v:.0f}手"
+
+
+def seal_lines(c):
+    return [
+        f'封单 {fmt_amt(c.get("order_amount"))}',
+        f'成交 {fmt_amt(c.get("turnover_amount"))}',
+        f'封单/成交 {fmt_pct(c.get("seal_turnover_pct"))}',
+    ]
 
 
 def seal_text(c):
-    amount = fmt_amt(c.get("order_amount"))
-    hands = fmt_hands(c.get("order_hands"))
-    if amount == "—" and hands == "—":
-        return "封单 —"
-    return f"封单 {amount} / {hands}"
+    return "\n".join(seal_lines(c))
 
 
 def board_text(n):
@@ -77,11 +77,12 @@ def card_html(c):
         row += (f'<span class="fin" title="自历史日起这一波最终走到的连板数">'
                 f'终{c["final_lb"]}板</span>')
     tags = "".join(f'<span class="tag tag-concept">{esc(t)}</span>' for t in c["tags"][:2])
-    return (f'<article class="{cls}" data-key="{esc(key)}" data-code="{esc(c["code"])}" '
+    seal = "".join(f'<span class="seal-line">{esc(line)}</span>' for line in seal_lines(c))
+    return (f'<article class="{cls}" data-key="{esc(key)}" '
             f'data-side="{c["side"]}" data-lb="{c["lb"]}" tabindex="0" role="button">'
-            f'<div class="card-head"><h3 class="name">{esc(c["name"])}</h3>{ind}</div>'
+            f'<div class="card-head"><h3 class="name stock-name">{esc(c["name"])}</h3>{ind}</div>'
             f'<div class="c-rg-row">{row}</div>'
-            f'<div class="seal">{esc(seal_text(c))}</div>'
+            f'<div class="seal">{seal}</div>'
             f'<div class="tags">{tags}</div></article>')
 
 
@@ -125,7 +126,7 @@ def build_compare(d):
     common = [c for c in cur if c["common"] and c["code"] in his_by_code]
     common.sort(key=lambda c: (-max(c["lb"], his_by_code[c["code"]]["lb"]), -c["lb"], c["name"]))
     chips = "".join(
-        f'<span class="c-chip" title="{esc(c["name"])} {esc(c["code"])}">'
+        f'<span class="c-chip" title="{esc(c["name"])}">'
         f'<b>{esc(c["name"])}</b>'
         f'<i class="cb">{board_text(c["lb"])}</i>'
         f'<em>→</em>'
@@ -151,9 +152,9 @@ def build_compare(d):
         right_html = ('<div class="c-cards">' + "".join(card_html(c) for c in right) + "</div>"
                       ) if right else f'<div class="c-none">{right_none}</div>'
         rows.append(f'''
-      <div class="c-row" data-board="{b}">
+      <div class="row c-row" data-board="{b}">
         <div class="c-cell cur">{left_html}</div>
-        <div class="c-rail"><b>{b}</b><span>板</span></div>
+        <div class="c-rail"><b>{board_text(b)[:-1]}</b><span>板</span></div>
         <div class="c-cell his">{right_html}</div>
       </div>''')
 
@@ -227,7 +228,8 @@ def build_footer(d):
         f'其中北交所 {d["n_bj"]} 只，开盘啦无北交所数据，不参与重合统计，重叠分母 {d["denom"]}）。'
         f'{tag_note}{fallback}；股名后为所属行业 tag（东财，历史股行业可能因限流留空）；'
         f'输赢前为所属地域 tag（东财 f128，历史股使用当前地域分类，缺失时留空）；'
-        f'地域行下为收盘封单金额/手数（手数 = 封单额 ÷ 当日收盘价 ÷ 100，为换算约值，缺数据显示 —）。<br>'
+        f'地域行下依次为收盘封单额、全天成交额、封单额/成交额，百分比保留两位小数；'
+        f'成交额取开盘啦当日板位数据[11]，北交所等缺失股用腾讯指定日日K成交额（万元转元）兜底，缺数据显示 —。<br>'
         f'<b>历史对照</b>：开盘啦 apphis.longhuvip.com，扫描区间 {d["scan"]["start"]} ~ {d["scan"]["end"]}'
         f'（共 {d["scan"]["days"]} 个交易日）；历史卡标签只用当日涨停原因'
         f'（开盘啦「所属板块」会回填当前概念，历史不用；当日领涨概念无历史源）。<br>'
@@ -258,12 +260,13 @@ def main():
             "industry": c.get("industry", ""),
             "region": c.get("region", ""),
             "first_time": c["first_time"], "order_amount": c["order_amount"],
-            "close_price": c.get("close_price"), "order_hands": c.get("order_hands"),
+            "turnover_amount": c.get("turnover_amount"),
+            "seal_turnover_pct": c.get("seal_turnover_pct"),
             "zbc": "" if c["zbc"] is None else c["zbc"],
             "high_days": c["high_days"], "tags": c["tags"],
             "final_lb": c.get("final_lb"),
             "wins": c["wins"], "losses": c["losses"],
-            "seal": seal_text(c),
+            "seal_lines": seal_lines(c),
         }
 
     html_out = tpl
