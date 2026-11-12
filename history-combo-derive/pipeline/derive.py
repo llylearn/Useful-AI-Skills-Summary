@@ -185,7 +185,7 @@ def em_recs(em):
 
 
 # ------------------------------------------------------------------ analyze
-def analyze(recs_by_date, dates, target, ind_map):
+def analyze(recs_by_date, dates, target, ind_map, detailed=False):
     N = len(dates)
     idx = {d: i for i, d in enumerate(dates)}
 
@@ -376,7 +376,7 @@ def analyze(recs_by_date, dates, target, ind_map):
         tr_end = max(0, cut - 15)
         Xtr, ytr = build(dates[:tr_end])
         Xva, yva = build(dates[tr_end:cut])
-        if len(ytr) > 200 and len(yva) > 30:
+        if detailed and len(ytr) > 200 and len(yva) > 30:
             w, mu, sd = train(Xtr, ytr)
             pv = predict(Xva, w, mu, sd)
             Xall, yall = build(dates[:cut])
@@ -406,7 +406,7 @@ def names_of(codes, rmap):
     return "、".join(rmap[c]["name"] for c in codes if c in rmap)
 
 
-def render(R):
+def render_verbose(R):
     d = R["target"]
     dates = R["dates"]
     tf = R["target_first"]
@@ -564,6 +564,69 @@ def render(R):
     p("- 数据窗口：同花顺历史接口约 1 年；更早年份无法覆盖。")
     p("- 今天之后未知：文中 4 板+ 名字均来自历史同梯队结果，不是对今天这批股票的确定性预测。")
     p("- 本文是数据复盘，不构成投资建议。")
+    return "\n".join(out)
+
+
+def render(R):
+    """精简看板：一张表回答组合、历史同日、龙头和最终板数。"""
+    d = R["target"]
+    dates = R["dates"]
+    rmap = {r["code"]: r for r in R["target_first"]}
+    ind = R["ind_map"]
+    out = []
+    p = out.append
+
+    def F(s):
+        return "%s-%s-%s" % (s[:4], s[4:6], s[6:]) if s and len(s) == 8 and s.isdigit() else s
+
+    def order_codes(codes):
+        return sorted(codes, key=lambda c: (ind.get(c, "zzz"), rmap.get(c, {}).get("name", "")))
+
+    # 所有有历史龙头的重合日均保留；另外保留主组合和最大反例，避免只看好的一面。
+    selected = {x["date"]: x for x in R["ov_days"] if x["wins"]}
+    for x in (R["primary"], R["recent"], R["counter"]):
+        if x:
+            selected[x["date"]] = x
+
+    def rank(x):
+        if R["primary"] and x["date"] == R["primary"]["date"]:
+            return 0
+        if R["recent"] and x["date"] == R["recent"]["date"]:
+            return 1
+        return 2 if x["wins"] else 3
+
+    rows = sorted(selected.values(), key=lambda x: (
+        rank(x), -int(x["in_ov"]), -len(x["ov"]), -int(x["date"])))
+
+    p("# %s 当前首板 × 历史龙头" % F(d))
+    p("")
+    p('<p class="meta">当前首板 %d 只 · 历史窗口 %s ~ %s · %d 条组合记录</p>' % (
+        len(R["target_first"]), F(dates[0]), F(d), len(rows)))
+    p("")
+    p("| 当前首板组合 | 历史共同首板日 | 同梯队历史龙头 | 龙头最高连板 |")
+    p("|---|---|---|---|")
+    if not rows:
+        p("| 近一年暂无符合条件的首板组合 | — | 无 4 板+ | — |")
+    for x in rows:
+        combo = "%s<br><span class=\"count\">%d 只</span>" % (
+            names_of(order_codes(x["ov"]), rmap), len(x["ov"]))
+        labels = []
+        if R["primary"] and x["date"] == R["primary"]["date"]:
+            labels.append('<span class="badge primary">主组合</span>')
+        if R["recent"] and x["date"] == R["recent"]["date"]:
+            labels.append('<span class="badge recent">最近重演</span>')
+        if R["counter"] and x["date"] == R["counter"]["date"] and not x["wins"]:
+            labels.append('<span class="badge counter">反例</span>')
+        date_cell = F(x["date"]) + (("<br>" + "".join(labels)) if labels else "")
+        wins = sorted(x["wins"], key=lambda w: (-w["max"], w["name"]))
+        leaders = "<br>".join(
+            '%s%s' % (w["name"], '<span class="in">组合内</span>' if w["code"] in x["ov"] else "")
+            for w in wins
+        ) or '<span class="muted">无 4 板+</span>'
+        boards = "<br>".join('<strong>%d 板</strong>' % w["max"] for w in wins) or "—"
+        p("| %s | %s | %s | %s |" % (combo, date_cell, leaders, boards))
+    p("")
+    p("> 仅列有 4 板+ 龙头的历史组合，并保留主组合与反例。板数截至当前交易日；历史结果不是对今天的预测，4 板+ 含首板当天，不构成投资建议。")
     return "\n".join(out)
 
 
